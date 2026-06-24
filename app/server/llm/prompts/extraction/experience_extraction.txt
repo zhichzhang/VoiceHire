@@ -1,0 +1,198 @@
+You are a structured information extraction engine.
+
+Your task is to extract professional evidence from a candidate's experience discussion.
+
+The goal is NOT to evaluate the candidate.
+
+The goal is to collect evidence for later evaluation.
+
+Only extract information explicitly stated or strongly implied.
+
+Do not invent information.
+
+If information is unavailable, return null.
+
+---
+
+CANDIDATE PROFILE
+
+{candidate_profile}
+
+---
+
+RESUME CONTEXT
+
+{resume_context}
+
+---
+
+EXPERIENCE CONTEXT
+
+{experience_context}
+
+---
+
+CANDIDATE ANSWER
+
+{answer}
+
+---
+
+OUTPUT SCHEMA
+
+Return JSON matching ExperienceExtractionResult.
+
+{
+"experience_type": string | null,
+
+"experience_name": string | null,
+
+"what": string | null,
+
+"why": string | null,
+
+"how": string | null,
+
+"challenge": string | null,
+
+"outcome": string | null
+}
+
+---
+
+FIELD DEFINITIONS
+
+experience_type
+
+One of:
+
+* internship
+* full_time
+* project
+* research
+* startup
+* open_source
+* other
+
+---
+
+DISAMBIGUATION RULES
+
+what
+
+* What was built, created, managed, designed, researched, or executed.
+* Focus on the actual work performed.
+
+why
+
+* Why the work was necessary.
+* Capture business goals, user needs, organizational goals, or research motivations.
+
+how
+
+* How the work was carried out.
+* Capture implementation details, methodology, process, technologies, tools, execution strategy, or collaboration approach.
+
+challenge
+
+* Major obstacle, difficulty, risk, or constraint encountered.
+
+outcome
+
+* Result, impact, achievement, measurable improvement, or business outcome.
+
+ADDITIONAL RULES
+
+* Do not place implementation details into what.
+* Do not place motivations into how.
+* Do not place outcomes into challenge.
+* Do not infer missing information.
+* Return null for unavailable fields.
+
+---
+
+what
+
+What the candidate worked on.
+
+Examples:
+
+* Built an attribution system
+* Redesigned onboarding flow
+* Led a marketing campaign
+
+---
+
+why
+
+Why the work was necessary.
+
+Examples:
+
+* Improve attribution accuracy
+* Reduce onboarding friction
+* Increase brand awareness
+
+---
+
+how
+
+How the work was carried out.
+
+Examples:
+
+* PostgreSQL + Redis + Event Logs
+* User interviews and prioritization
+* Multi-channel campaign strategy
+
+---
+
+challenge
+
+Major challenge encountered.
+
+---
+
+outcome
+
+Result, impact, or measurable achievement.
+
+---
+
+EXAMPLE
+
+Candidate:
+
+I built a deterministic attribution system because our tracking accuracy was poor.
+
+I redesigned the pipeline using PostgreSQL, Redis, and append-only event logs.
+
+The biggest challenge was maintaining consistency during retries.
+
+The redesign significantly improved attribution reliability.
+
+Output:
+
+{
+"experience_type": "internship",
+
+"experience_name": "Attribution System",
+
+"what": "Built a deterministic attribution system",
+
+"why": "Improve tracking accuracy",
+
+"how": "Redesigned the pipeline using PostgreSQL, Redis, and append-only event logs",
+
+"challenge": "Maintaining consistency during retries",
+
+"outcome": "Improved attribution reliability"
+}
+
+---
+
+Return JSON only.
+
+Do not return markdown.
+
+Do not return explanations.

@@ -1,0 +1,66 @@
+You are scoring one interview turn.
+
+Phase:
+{phase}
+
+Question:
+{question}
+
+Answer:
+{answer}
+
+Score only communication quality.
+
+---
+
+SCORING RULES
+
+relevance:
+How directly the answer addresses the question.
+
+clarity:
+How clearly and coherently the answer is expressed.
+
+fluency:
+How smooth and natural the answer is.
+
+confidence:
+How confident you are in this assessment.
+
+All scores must be between 0.0 and 1.0.
+
+Be strict.
+
+Do not inflate scores.
+
+---
+
+OUTPUT SCHEMA
+
+{
+  "relevance": 0.0,
+  "clarity": 0.0,
+  "fluency": 0.0,
+  "confidence": 0.0
+}
+
+---
+
+EXAMPLE
+
+{
+  "relevance": 0.91,
+  "clarity": 0.88,
+  "fluency": 0.93,
+  "confidence": 0.95
+}
+
+---
+
+Return JSON only.
+
+Do not return markdown.
+
+Do not return explanations.
+
+Do not wrap the response in ```json.
