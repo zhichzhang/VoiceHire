@@ -664,31 +664,14 @@ there may still be untested edge cases involving:
 * Long interview sessions
 * Large resumes
 * Unexpected LLM outputs
-* Recovery during in-flight processing
-
-
-
-# Future Roadmap
-
-* OpenAI support
-* Claude support
-* PDF resume support
-* DOCX resume support
-* Interview template customization
-* Recruiter dashboard
-* Candidate history tracking
-* Multi-language interviews
-* Better analytics
-* Docker deployment
-* CI/CD pipelines
-* Production deployment
-
-
+* Recovery during in-flight processing  
 
 # License
 
-This project is provided for educational, research, portfolio, and demonstration purposes only.
+This project is licensed under the PolyForm Noncommercial License 1.0.0.
 
-Commercial use, redistribution, sublicensing, and production deployment are not currently permitted without explicit permission from the author.
+You may use this software for personal, educational, and research purposes.
 
-Copyright (c) 2026 Zhicheng Zhang. All rights reserved.
+Commercial use, redistribution as part of a commercial product, or offering this software as a commercial service is prohibited without prior written permission from the copyright holder.
+
+See the LICENSE file for details.
