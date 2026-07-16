@@ -1,3 +1,5 @@
+# app/server/workers/livekit_stt_worker.py
+
 from __future__ import annotations
 
 """
@@ -29,7 +31,8 @@ from livekit import agents, rtc
 from livekit.agents import AgentServer, inference
 from livekit.agents.stt import SpeechEventType
 
-from app.server.core.config import settings
+# from app.server.core.config import settings
+from app.server.core.config_docker import settings
 from app.server.core.logger import logger
 
 server = AgentServer()

@@ -5,7 +5,8 @@ from traceback import format_exc
 
 from supabase import Client, create_client
 
-from app.server.core.config import settings
+# from app.server.core.config import settings
+from app.server.core.config_docker import settings
 from app.server.core.logger import logger
 
 

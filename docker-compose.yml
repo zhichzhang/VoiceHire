@@ -1,0 +1,38 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: app/server/Dockerfile
+    env_file:
+      - app/server/.env.prod
+    environment:
+      APP_ENV: production
+    expose:
+      - "8000"
+    restart: unless-stopped
+
+  worker:
+    build:
+      context: .
+      dockerfile: app/server/Dockerfile
+    env_file:
+      - app/server/.env.prod
+    environment:
+      APP_ENV: production
+      VOICEHIRE_API_BASE_URL: http://backend:8000
+    command: ["python", "-m", "app.server.workers.livekit_stt_worker"]
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ./app/web
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: /api
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped

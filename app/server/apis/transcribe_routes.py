@@ -32,7 +32,8 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from livekit import api
 
-from app.server.core.config import settings
+# from app.server.core.config import settings
+from app.server.core.config_docker import settings
 from app.server.core.logger import logger
 from app.server.models.transcribe import (
     DeleteTranscriptionResponse,

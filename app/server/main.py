@@ -10,7 +10,7 @@ from starlette.datastructures import State
 from starlette.middleware.cors import CORSMiddleware
 
 from app.server.apis import api_router
-from app.server.core.config import settings
+from app.server.core.config_docker import settings
 from app.server.core.logger import logger
 from app.server.core.supabase_client import (
     get_supabase_client,
