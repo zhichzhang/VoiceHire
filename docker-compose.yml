@@ -20,7 +20,7 @@ services:
     environment:
       APP_ENV: production
       VOICEHIRE_API_BASE_URL: http://backend:8000
-    command: ["python", "-m", "app.server.workers.livekit_stt_worker"]
+    command: ["python", "-m", "app.server.workers.livekit_stt_worker", "start"]
     depends_on:
       - backend
     restart: unless-stopped
