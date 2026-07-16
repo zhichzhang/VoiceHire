@@ -128,7 +128,6 @@ desktop.ini
 # Coverage / Reports
 # ============================================================
 
-coverage/
 reports/
 artifacts/
 
