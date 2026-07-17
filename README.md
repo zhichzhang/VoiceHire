@@ -1,5 +1,22 @@
 # VoiceHire
 
+[![Python](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
+
+[![Nginx](https://img.shields.io/badge/Nginx-Reverse%20Proxy-009639?logo=nginx&logoColor=white)](https://nginx.org/)
+[![Gemini](https://img.shields.io/badge/LLM-Gemini%202.5%20Flash-4285F4)](https://ai.google.dev/)
+[![LiveKit](https://img.shields.io/badge/Voice-LiveKit-FF6B00)](https://livekit.io/)
+[![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?logo=supabase&logoColor=white)](https://supabase.com/)
+[![AWS](https://img.shields.io/badge/Deploy-AWS%20EC2-FF9900?logo=amazonaws&logoColor=white)](https://aws.amazon.com/ec2/)
+[![HTTPS](https://img.shields.io/badge/HTTPS-Let's%20Encrypt-003A70?logo=letsencrypt&logoColor=white)](https://letsencrypt.org/)
+
+[![License](https://img.shields.io/badge/License-PolyForm%20Noncommercial-blue)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Active-success)]()
+[![Architecture](https://img.shields.io/badge/Architecture-Dockerized-blueviolet)]()
+
 An AI-powered voice interview platform that conducts structured technical interviews, dynamically generates follow-up questions, evaluates candidate responses, and produces detailed hiring reports.
 
 VoiceHire combines resume-aware interview generation, real-time speech transcription, dynamic LLM orchestration, session recovery, and automated candidate evaluation into a unified end-to-end technical interviewing platform.
@@ -20,7 +37,6 @@ The demo walks through:
 - Voice-based interview interaction
 - Session recovery workflow
 - Final evaluation report generation
-
 
 
 # Features
