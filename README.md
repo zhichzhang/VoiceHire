@@ -2,13 +2,12 @@
 
 An AI-powered voice interview platform that conducts structured technical interviews, dynamically generates follow-up questions, evaluates candidate responses, and produces detailed hiring reports.
 
-VoiceHire combines real-time speech transcription, resume-aware interview generation, dynamic LLM orchestration, session recovery, and automated candidate evaluation into a single end-to-end interview workflow.
-
+VoiceHire combines resume-aware interview generation, real-time speech transcription, dynamic LLM orchestration, session recovery, and automated candidate evaluation into a unified end-to-end technical interviewing platform.
 
 
 ## Demo Video
 
-Watch the complete demo here:
+Watch the complete demo:
 
 [Demo Video](https://drive.google.com/file/d/13cW2mWJeB89b1Tsfnue-y3bC9dznQat1/view?usp=sharing)
 
@@ -25,6 +24,12 @@ The demo walks through:
 
 
 # Features
+
+## Real-Time AI Interviewing
+
+VoiceHire conducts fully automated voice interviews using LiveKit, speech-to-text, and LLM orchestration.
+
+Instead of following a predefined script, the interview dynamically adapts to each candidate's resume, previous answers, and information coverage throughout the session.
 
 ## Resume-Aware Interviewing
 
@@ -55,7 +60,7 @@ Validation includes:
 * Resume section detection
 * Core content verification
 
-This prevents invalid or unrelated content from entering the interview workflow.
+This prevents malformed or unrelated resumes from entering the interview workflow.
 
 
 
@@ -63,7 +68,7 @@ This prevents invalid or unrelated content from entering the interview workflow.
 
 VoiceHire supports resume persistence.
 
-If a candidate has already uploaded a resume and does not want to update it:
+If a candidate has previously uploaded a resume and does not want to update it:
 
 * The resume field may be left empty
 * Existing resume data will be reused
@@ -75,7 +80,7 @@ This significantly improves the experience for repeated interview sessions.
 
 ## Dynamic Question Generation
 
-Unlike traditional scripted interviews, VoiceHire generates questions dynamically.
+Unlike traditional rule-based or scripted interviews, VoiceHire generates questions dynamically.
 
 Questions are generated using:
 
@@ -245,7 +250,6 @@ Future support may include:
 without requiring workflow redesign.
 
 
-
 # Standard Interview Lifecycle
 
 A typical interview follows the workflow below.
@@ -385,31 +389,27 @@ VoiceHire
 │       └── voicehire-schema.sql
 │
 └── tests
-```
-
-
+```  
 
 # Environment Setup
 
-VoiceHire depends on three external services.
+VoiceHire depends on three external services:
 
-* Gemini API
-* Supabase
-* LiveKit Cloud
-
-
+- Gemini API
+- Supabase
+- LiveKit Cloud
 
 ## 1. Gemini API
 
 Website: https://ai.google.dev/
 
-Create an API key and add:
+Create an API key:
 
 ```env
 GEMINI_API_KEY=
 ```
 
-
+---
 
 ## 2. Supabase
 
@@ -428,17 +428,7 @@ Initialize the database using:
 packages/shared/voicehire-schema.sql
 ```
 
-Open:
-
-```text
-Supabase Dashboard
-→ SQL Editor
-→ New Query
-→ Paste voicehire-schema.sql
-→ Run
-```
-
-
+---
 
 ## 3. LiveKit Cloud
 
@@ -458,11 +448,13 @@ Example:
 LIVEKIT_URL=wss://your-project.livekit.cloud
 ```
 
+# Running Locally (Development)
 
+VoiceHire supports native local development without Docker.
 
-# Backend Environment Variables
+## Backend
 
-Create:
+Configure:
 
 ```text
 app/server/.env.dev
@@ -473,21 +465,59 @@ Example:
 ```env
 APP_ENV=dev
 
-GEMINI_API_KEY=
-
 SUPABASE_URL=
 SUPABASE_KEY=
+
+GEMINI_API_KEY=
 
 LIVEKIT_URL=
 LIVEKIT_API_KEY=
 LIVEKIT_API_SECRET=
 
 LIVEKIT_TRANSCRIBER_AGENT_NAME=voicehire-transcriber
+
+DATABASE_URL=
 ```
 
-# Frontend Environment Variables
+If you switch between local development and Docker deployment,
+remember to switch the imported settings module accordingly. 
 
-Create:
+```python
+from app.server.core.config import settings
+```
+
+Install dependencies:
+
+```bash
+cd app/server
+pip install -r requirements.txt
+```
+
+Start the backend:
+
+```bash
+python -m uvicorn app.server.main:app --reload
+```
+
+---
+
+## LiveKit STT Worker
+
+Open another terminal and start the worker:
+
+```bash
+python -m app.server.workers.livekit_stt_worker start
+```
+
+> **Important**
+>
+> The LiveKit worker must be started using the `start` subcommand.
+
+---
+
+## Frontend
+
+Configure:
 
 ```text
 app/web/.env.development
@@ -499,78 +529,196 @@ Example:
 VITE_API_BASE_URL=http://127.0.0.1:8000
 ```
 
-
-
-# Installation
-
-## Backend
-
-```bash
-cd app/server
-
-pip install -r requirements.txt
-```
-
-## Frontend
+Install dependencies:
 
 ```bash
 cd app/web
-
 npm install
 ```
 
-
-
-# Running Locally
-
-Three processes must be started.
-
-
-
-## Start Backend
-
-From project root:
+Start the frontend:
 
 ```bash
-python -m uvicorn app.server.main:app --reload
-```
-
-
-
-## Start LiveKit STT Worker
-
-Open another terminal:
-
-```bash
-python -m app.server.workers.livekit_stt_worker start
-```
-
-
-
-## Start Frontend
-
-```bash
-cd app/web
-
 npm run dev
 ```
 
-
-
-# Access Application
-
-Frontend:
+The application will be available at:
 
 ```text
+Frontend:
 http://localhost:5173
-```
 
 Backend:
-
-```text
 http://localhost:8000
 ```
 
+---
+
+# Production Deployment (Docker)
+
+Production deployment is designed for cloud servers (e.g. AWS EC2) using Docker Compose.
+
+## Backend
+
+Configure:
+
+```text
+app/server/.env.prod
+```
+
+Example:
+
+```env
+APP_ENV=production
+
+SUPABASE_URL=
+SUPABASE_KEY=
+
+GEMINI_API_KEY=
+
+LIVEKIT_URL=
+LIVEKIT_API_KEY=
+LIVEKIT_API_SECRET=
+
+LIVEKIT_TRANSCRIBER_AGENT_NAME=voicehire-transcriber
+
+VOICEHIRE_API_BASE_URL=http://backend:8000
+
+DATABASE_URL=
+```
+
+For Docker deployment, ensure the backend imports:
+
+```python
+from app.server.core.config_docker import settings
+```
+
+---
+
+## Frontend
+
+Configure:
+
+```text
+app/web/.env.production
+```
+
+Example:
+
+```env
+VITE_API_BASE_URL=/api
+```
+
+---
+
+## Build and Start
+
+Build and start all services:
+
+```bash
+docker compose build
+docker compose up -d
+```
+
+Check running services:
+
+```bash
+docker compose ps
+```
+
+---
+
+# HTTPS Support
+
+VoiceHire provides two Nginx configurations:
+
+```text
+app/web/nginx.http.conf
+app/web/nginx.https.conf
+```
+
+> **Important**
+>
+> Both files use:
+>
+> ```nginx
+> server_name voicehire.zhichzhang.dev;
+> ```
+>
+> Replace `voicehire.zhichzhang.dev` with **your own domain** before deployment.
+
+### First Deployment
+
+Use the HTTP configuration:
+
+```bash
+cp app/web/nginx.http.conf app/web/nginx.conf
+```
+
+Build and start the application:
+
+```bash
+docker compose build
+docker compose up -d
+```
+
+Issue a Let's Encrypt certificate:
+
+```bash
+docker compose run --rm certbot certonly \
+  --webroot \
+  -w /var/www/certbot \
+  -d <your-domain> \
+  --email <your-email> \
+  --agree-tos \
+  --no-eff-email
+```
+
+The HTTP configuration is only required for the initial certificate issuance.
+Subsequent deployments can continue using `nginx.https.conf`. After the certificate has been generated successfully, switch to the HTTPS configuration:
+
+```bash
+cp app/web/nginx.https.conf app/web/nginx.conf
+docker compose up -d --force-recreate web
+```
+
+The application will then be available over HTTPS.
+
+---
+
+# Useful Docker Commands
+
+Build images:
+
+```bash
+docker compose build
+```
+
+Start services:
+
+```bash
+docker compose up -d
+```
+
+View logs:
+
+```bash
+docker compose logs backend --tail=50
+docker compose logs worker --tail=50
+docker compose logs web --tail=50
+```
+
+Check running containers:
+
+```bash
+docker compose ps
+```
+
+Renew the Let's Encrypt certificate:
+
+```bash
+docker compose run --rm certbot renew --webroot -w /var/www/certbot
+```
 
 
 # First-Time Test
@@ -623,8 +771,6 @@ PDF
 DOCX
 ```
 
-
-
 ## Frontend Issues
 
 Known issues include:
@@ -632,21 +778,6 @@ Known issues include:
 * Minor UI bugs
 * Responsive layout improvements
 * Visual polish opportunities
-
-
-
-## Codebase Cleanup
-
-Current priorities focus on functionality.
-
-Areas still being improved:
-
-* Refactoring
-* Documentation
-* Testing coverage
-* Component organization
-
-
 
 ## Potential Edge Cases
 
@@ -664,14 +795,10 @@ there may still be untested edge cases involving:
 * Long interview sessions
 * Large resumes
 * Unexpected LLM outputs
-* Recovery during in-flight processing  
+* Recovery during in-flight processing 
 
 # License
 
 This project is licensed under the PolyForm Noncommercial License 1.0.0.
 
-You may use this software for personal, educational, and research purposes.
-
-Commercial use, redistribution as part of a commercial product, or offering this software as a commercial service is prohibited without prior written permission from the copyright holder.
-
-See the LICENSE file for details.
+See the [LICENSE](LICENSE) file for details.
